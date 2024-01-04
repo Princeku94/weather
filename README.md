@@ -2,6 +2,9 @@
 
 A simple animated weather app.
 
+![vid](https://github.com/Princeku94/weather/assets/64741610/02533fa1-0f4c-41bb-bcc1-56fbcd72c4f6)
+
+
 ## Screenshots:
 
 
