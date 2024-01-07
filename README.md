@@ -4,6 +4,28 @@ A simple animated weather app.
 
 ![vid](https://github.com/Princeku94/weather/assets/64741610/02533fa1-0f4c-41bb-bcc1-56fbcd72c4f6)
 
+## Installation
+
+Follow these steps to run the app on your local machine:
+
+Ensure you have Flutter installed. If not, follow the Flutter installation guide.
+
+Clone this repository to your local machine using:
+
+git clone https://github.com/sabinmhx/baadal.git
+Change the working directory to the project folder:
+
+cd baadal
+Get your API key from OpenWeatherMap and replace the placeholder in lib/api_key.dart:
+
+const apiKey = "ENTER_YOUR_API_KEY_HERE";
+Install the dependencies:
+
+flutter pub get
+Run the app:
+
+flutter run
+
 
 ## Screenshots:
 
