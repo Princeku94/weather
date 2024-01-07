@@ -17,8 +17,7 @@ Change the working directory to the project folder:
 
 const apiKey = "ENTER_YOUR_API_KEY_HERE";
 
-4. 
-Install the dependencies:
+4. Install the dependencies:
 flutter pub get
 Run the app:
 
