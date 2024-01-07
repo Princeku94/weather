@@ -10,14 +10,15 @@ Follow these steps to run the app on your local machine:
 
 1.Clone this repository to your local machine using:
 
-git clone [https://github.com/Princeku94/weather.git](https://github.com/Princeku94/weather.git)
+2.git clone [https://github.com/Princeku94/weather.git](https://github.com/Princeku94/weather.git)
 Change the working directory to the project folder:
 
-Get your API key from OpenWeatherMap and replace the placeholder in lib/services/api_data.dart:
+3.Get your API key from OpenWeatherMap and replace the placeholder in lib/services/api_data.dart:
 
 const apiKey = "ENTER_YOUR_API_KEY_HERE";
-Install the dependencies:
 
+5. 
+Install the dependencies:
 flutter pub get
 Run the app:
 
