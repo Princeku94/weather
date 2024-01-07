@@ -1,16 +1,39 @@
 # weather
 
-A new Flutter project.
+A simple animated weather app.
 
-## Getting Started
+![vid](https://github.com/Princeku94/weather/assets/64741610/02533fa1-0f4c-41bb-bcc1-56fbcd72c4f6)
 
-This project is a starting point for a Flutter application.
+## Installation
 
-A few resources to get you started if this is your first Flutter project:
+Follow these steps to run the app on your local machine:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1.Clone this repository to your local machine using:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2.git clone [https://github.com/Princeku94/weather.git](https://github.com/Princeku94/weather.git)
+Change the working directory to the project folder:
+
+3.Get your API key from [OpenWeatherMap](https://openweathermap.org/) and replace the placeholder in lib/services/api_data.dart:
+
+const apiKey = "ENTER_YOUR_API_KEY_HERE";
+ 
+4.Install the dependencies:
+flutter pub get
+Run the app:
+
+flutter run
+
+
+## Screenshots:
+
+
+# Cloudy
+![Screenshot_20240104-225729_weather](https://github.com/Princeku94/weather/assets/64741610/bb6fbf9b-579f-4116-b1f4-146f96a3f2f8) 
+
+# Rainy
+![Screenshot_20240104-225758_weather](https://github.com/Princeku94/weather/assets/64741610/0614f545-1e05-4a9a-91b2-71c031bb45da) 
+
+# Sunny
+![Screenshot_20240104-225717_weather](https://github.com/Princeku94/weather/assets/64741610/1725c2c5-f247-46e5-8a03-bb0deb3702f0)
+
+
