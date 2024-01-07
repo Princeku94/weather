@@ -3,24 +3,22 @@ import 'package:weather/animation/anim_cloud.dart';
 import 'package:weather/widgets/card/card_item.dart';
 import 'package:weather/animation/sun_effect.dart';
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
+import '../services/weather.dart';
+import '../widgets/card/card_model.dart';
+import '../animation/rain.dart';
 
-import 'widgets/card/card_model.dart';
-import 'animation/rain.dart';
-
-List<CardModel> list = [
-  const CardModel(time: '1:00 PM', temp: '38', comment: 'Sunny', icon: '☀️'),
-  const CardModel(time: '9:00 AM', temp: '17', comment: 'Cloudy', icon: '☁️'),
-  const CardModel(time: '6:00 PM', temp: '2', comment: 'Rainny', icon: '🌧'),
-  const CardModel(time: '8:00 PM', temp: '10', comment: 'Cloudy', icon: '☁️'),
-  const CardModel(time: '6:00 PM', temp: '3', comment: 'Rainny', icon: '🌧'),
-];
+List<CardModel> list = [];
 final Key parallaxOne = GlobalKey();
-String temp = '38';
-String advice = ' Feels like sunny\nLet\'s take sun bath';
+String temp = '';
+String advice = ' ';
 int selectedIndex = 0;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.weatherData, this.currentWeather});
+
+  final weatherData;
+  final currentWeather;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -28,11 +26,74 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String comment = 'No Comment';
+
+  String city = '';
+
+  DateTime nowTime = DateTime.now();
+  String date = '';
+  String weatherIcon = '';
+
+  String currentTemperature = '';
+
+  @override
+  void initState() {
+    super.initState();
+    date = DateFormat.MMMEd().format(nowTime);
+
+   
+    getLocationData();
+  }
+
+void getLocationData() async {
+    WeatherModel weatherModel = WeatherModel();
+
+    // var weatherData = await WeatherModel().getLocationWeather();
+    // var currentWeather = await WeatherModel().getCurrentTemp();
+
+    setState(() {
+      if (widget.weatherData == null && widget.currentWeather == null) {
+        city = '';
+        temp = '';
+        comment = '';
+        weatherIcon = '';
+        return;
+      }
+
+      double currentTemp = widget.currentWeather['main']['temp'];
+
+      currentTemperature = currentTemp.toInt().toString();
+      city = widget.weatherData['city']['name'];
+
+      for (var i = 0; i < 5; i++) {
+        double temperature = widget.weatherData['list'][i]['main']['temp'];
+
+        temp = temperature.toInt().toString();
+
+        int dt = widget.weatherData['list'][i]['dt'];
+
+        weatherIcon = weatherModel.getWeatherIcon(temperature.toInt());
+        comment = weatherModel.getMessage(temperature.toInt());
+
+        list.add(CardModel(
+            time: getTime(dt),
+            temp: temp,
+            comment: comment,
+            icon: weatherIcon));
+      }
+
+     // print(list);
+    });
+
+  }
+
+  String getTime(final timeStamp) {
+    DateTime time = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+    String x = DateFormat('jm').format(time);
+    return x;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final topPadding = MediaQuery.of(context).padding.top;
-    // double res_width = MediaQuery.of(context).size.width;
-    // double res_height = MediaQuery.of(context).size.height;
     return Container(
       height: double.infinity,
       decoration: const BoxDecoration(
@@ -42,6 +103,20 @@ class _HomeScreenState extends State<HomeScreen> {
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: Scaffold(
           appBar: AppBar(
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    temp = currentTemperature;
+                  });
+                },
+                child: const Icon(
+                  Icons.near_me,
+                  size: 30,
+                  color: Colors.purple,
+                ),
+              ),
+            ],
             leading: SizedBox(
                 height: 35.0,
                 width: 33.0,
@@ -61,48 +136,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
               children: [
                 animatinWidget,
-                
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$temp°',
+                          // '$currentTemperature°',
+                          temp,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 70,
                               color: Colors.white),
                         ),
-                        const Text(
-                          'Sunday, June 6',
-                          style: TextStyle(fontSize: 16, color: Colors.white54),
+                        Text(
+                          date,
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.white54),
                         ),
-                        const Text(
-                          'Mumbai',
-                          style: TextStyle(
+                        Text(
+                          city,
+                          style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-
                         const SizedBox(
                           height: 8,
                         ),
-
-                       
                       ],
                     ),
-
                     Image.asset(
                       getGirl,
                       height: 150,
                     ),
-
-                   
                   ],
                 ),
                 const SizedBox(
@@ -142,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 25,
                 ),
-
                 Expanded(
                   child: ListView.builder(
                       itemCount: list.length,
@@ -199,9 +266,9 @@ Widget get animatinWidget {
 }
 
 String get getAdvice {
-  if (int.parse(temp) > 20) {
+  if (int.parse(temp) > 25) {
     return ' Feels like sunny\nLet\'s take sun bath';
-  } else if (int.parse(temp) > 4) {
+  } else if (int.parse(temp) > 20) {
     return ' Feels like cloudy\nCarry Sweater with you';
   } else {
     return ' Feels like rainy\nCarry Umbrella with you';
@@ -209,9 +276,9 @@ String get getAdvice {
 }
 
 String get getGirl {
-  if (int.parse(temp) > 20) {
+  if (int.parse(temp) > 25) {
     return 'assets/images/sunny_girl.png';
-  } else if (int.parse(temp) > 4) {
+  } else if (int.parse(temp) > 20) {
     return 'assets/images/sweater_girl.png';
   } else {
     return 'assets/images/girl.png';

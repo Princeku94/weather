@@ -26,25 +26,18 @@ class CardItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               time,
               style: const TextStyle(fontSize: 14, color: Colors.white60),
             ),
-            const SizedBox(
-              height: 8,
-            ),
-          
             Text(
               icon,
               style: const TextStyle(
-                  fontSize: 25,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
-            ),
-            const SizedBox(
-              height: 8,
             ),
             Text(
               '$temp°',
@@ -52,9 +45,6 @@ class CardItem extends StatelessWidget {
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
-            ),
-            const SizedBox(
-              height: 8,
             ),
             Text(
               comment,
